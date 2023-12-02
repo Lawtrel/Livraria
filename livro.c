@@ -109,9 +109,82 @@ float calcularValorVendaImportado(LivroImportado livro_importado, float taxa_dol
     return livro_importado.valor_compra_dolar * (1 + taxa_importacao) * taxa_dolar;
 }
 
+// Função para ler livros nacionais
 void lerLivrosNacionais(Livro livros_nacionais[], int *total_livros_nacionais) {
     int codigo, num_paginas, tipo_encadernacao;
     float valor_pagina;
 
-    printf("")
+    printf("\nCadastro de livros nacionais:\n");
+    do {
+        printf("Código do livro (0 para finalizar): ");
+        scanf("%d",&codigo);
+        
+        if (codigo != 0) {
+            printf("Número de páginas: ");
+            scanf("%d", &num_paginas);
+            printf("Valor da página: ");
+            scanf("%d", &valor_pagina);
+            printf("Tipo de encadernação (1 ou 2): ");
+            scanf("%d", &tipo_encadernacao);
+
+            Livro livro = {codigo, num_paginas, valor_pagina, tipo_encadernacao};
+            livros_nacionais[(*total_livros_nacionais)++] = livro;
+
+            float valor_venda = calcularValorVendaNacional(livro);
+            printf("Valor de venda do livro: %.2f\n", valor_venda);
+        }
+    } while (codigo != 0);
+}
+
+//Função para ler livros importados
+void lerLivrosImportados(LivroImportado livros_importados[], int *total_livros_importados, float taxa_dolar) {
+    int codigo, regiao_origem;
+    float valor_compra_dolar;
+
+    printf("\nCadastro de livros importados:\n");
+    do {
+        printf("Código do livro (0 para finalizar): ");
+        scanf("%d", &codigo);
+
+        if (codigo != 0) {
+            printf("Valor de compra em dólar: ");
+            scanf("%f", &valor_compra_dolar);
+            printf("Número da região de origem (1 - América do Norte, 2 - Europa, 3 - Demais): ");
+            scanf("%d", &regiao_origem);
+
+            LivroImportado livro_importado = {codigo, valor_compra_dolar, regiao_origem};
+            livros_importados[(*total_livros_importados)++] = livro_importado;
+
+            float valor_venda_importado = calcularValorVendaImportado(livro_importado, taxa_dolar);
+            printf("Valor de venda do livro importado: %.2f\n", valor_venda_importado);
+        }
+    } while (codigo != 0);
+}
+// Função para calcular estatísticas da livraria
+void calcularEstatisticas(Livro livros_nacionais[], int total_livros_nacionais, LivroImportado livros_importados[], int total_livros_importados, float taxa_dolar) {
+    float total_valor_venda_nacionais = 0;
+    float total_valor_venda_importados = 0;
+
+    // Calcular o valor total de venda dos livros nacionais
+    for (int i = 0; i < total_livros_nacionais; i++) {
+        total_valor_venda_nacionais += calcularValorVendaNacional(livros_nacionais[i]);
+    }
+
+    // Calcular o valor total de venda dos livros importados
+    for (int i = 0; i < total_livros_importados; i++) {
+        total_valor_venda_importados += calcularValorVendaImportado(livros_importados[i], taxa_dolar);
+    }
+
+    // Calcular média de venda dos livros
+    float media_venda_livros = (total_valor_venda_nacionais + total_valor_venda_importados) / (total_livros_nacionais + total_livros_importados);
+
+    // Calcular a percentagem de livros importados
+    float percentual_importados = (float)total_livros_importados / (total_livros_nacionais + total_livros_importados) * 100;
+
+    // Exibir estatísticas
+    printf("\nEstatísticas da Livraria:\n");
+    printf("Valor total de livros nacionais: %.2f\n", total_valor_venda_nacionais);
+    printf("Valor total de livros importados: %.2f\n", total_valor_venda_importados);
+    printf("Valor médio de venda dos livros: %.2f\n", media_venda_livros);
+    printf("Percentual de livros importados: %.2f%%\n", percentual_importados);
 }
