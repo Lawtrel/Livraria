@@ -85,3 +85,33 @@ float calcularValorVendaNacional(Livro livro) {
 
     return livro.num_paginas * livro.valor_pagina + valor_encadernacao;   
 }
+
+// Função para calcular o valor de venda de um livro importado
+
+float calcularValorVendaImportado(LivroImportado livro_importado, float taxa_dolar) {
+    float taxa_importacao;
+    // Definir a taxa de importação com base na região de origem
+    switch (livro_importado.regiao_origem)
+    {
+    case 1: // América do Norte
+        taxa_importacao = 0.2;
+        break;
+    case 2: // Europa
+        taxa_importacao = 0.2;
+        break;
+    case 3: // Outras regiões
+        taxa_importacao = 0.15;
+        break;
+    default:
+        taxa_importacao = 0.0;
+        break;
+    }
+    return livro_importado.valor_compra_dolar * (1 + taxa_importacao) * taxa_dolar;
+}
+
+void lerLivrosNacionais(Livro livros_nacionais[], int *total_livros_nacionais) {
+    int codigo, num_paginas, tipo_encadernacao;
+    float valor_pagina;
+
+    printf("")
+}
