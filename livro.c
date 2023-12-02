@@ -46,6 +46,8 @@ int main()
         printf("3. Calcular estatísticas\n");
         printf("4. Sair\n");
         printf("Escolhar uma opção: ");
+
+        while (getchar() != '\n');
         scanf("%d", &opcao);
 
         switch (opcao)
@@ -123,7 +125,7 @@ void lerLivrosNacionais(Livro livros_nacionais[], int *total_livros_nacionais) {
             printf("Número de páginas: ");
             scanf("%d", &num_paginas);
             printf("Valor da página: ");
-            scanf("%d", &valor_pagina);
+            scanf("%f", &valor_pagina);
             printf("Tipo de encadernação (1 ou 2): ");
             scanf("%d", &tipo_encadernacao);
 
