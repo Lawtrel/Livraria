@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <locale.h>
+#include <stdlib.h>
 
 #define MAX_FILIAIS 10
 #define MAX_LIVROS 100
@@ -28,17 +29,18 @@ void calcularEstatisticas(Livro livros_nacionais[], int total_livros_nacionais, 
 
 int main()
 {
+    setlocale(LC_ALL,"");
     float taxa_dolar;
     printf("Informe o valor do dolar: ");
     scanf("%f", &taxa_dolar);
 
     Livro livros_nacionais[MAX_LIVROS];
     LivroImportado livros_importado[MAX_LIVROS];
-    
+
     int total_livros_nacionais = 0;
     int total_livros_importados = 0;
     int opcao;
-    
+
     do {
         printf("\nMenu:\n");
         printf("1. Cadastrar livros Nacionais\n");
@@ -71,7 +73,8 @@ int main()
     {
         return 0;
     }
-    
+    return 0;
+
 }
 //Função para calcular o valor de venda de um livro nacional
 float calcularValorVendaNacional(Livro livro) {
@@ -85,7 +88,7 @@ float calcularValorVendaNacional(Livro livro) {
         valor_encadernacao = 22.0 + (0.003 * livro.num_paginas);
     }
 
-    return livro.num_paginas * livro.valor_pagina + valor_encadernacao;   
+    return livro.num_paginas * livro.valor_pagina + valor_encadernacao;
 }
 
 // Função para calcular o valor de venda de um livro importado
@@ -120,7 +123,7 @@ void lerLivrosNacionais(Livro livros_nacionais[], int *total_livros_nacionais) {
     do {
         printf("Código do livro (0 para finalizar): ");
         scanf("%d",&codigo);
-        
+
         if (codigo != 0) {
             printf("Número de páginas: ");
             scanf("%d", &num_paginas);
